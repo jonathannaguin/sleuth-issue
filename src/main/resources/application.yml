@@ -1,0 +1,4 @@
+logging:
+  level:
+    org.springframework.sample: DEBUG
+    org.springframework: 'WARN'
