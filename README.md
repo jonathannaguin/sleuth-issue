@@ -1,9 +1,9 @@
 # sleuth-issue
-Test repository that shows an issue found in Spring Sleuth when using Spring Flux
+Test repository that shows an issue found in Spring Sleuth when using Spring Flux and the async AWS SDK:
 
-Run the spring boot application using IDEA for example and the perform the following CURL commands:
+Run the spring boot application using IDEA for example and the perform the following CURL command:
 
-#### Success query
+#### Query
 
 ```
 curl -vv -X POST http://localhost:8080/query
@@ -12,26 +12,8 @@ curl -vv -X POST http://localhost:8080/query
 The output on the server will be something like, notice that we are missing the traceId and spanId in some lines:
 
 ```
-2018-11-28 17:04:54.735 DEBUG [-,2cee7cfa47e006a3,2cee7cfa47e006a3,false] 10658 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Query request received
-2018-11-28 17:04:54.736 DEBUG [-,2cee7cfa47e006a3,2cee7cfa47e006a3,false] 10658 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Performing query, mode 0
-2018-11-28 17:04:54.741 DEBUG [-,2cee7cfa47e006a3,2cee7cfa47e006a3,false] 10658 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Performing query against https://google.com
-2018-11-28 17:04:55.668 DEBUG [-,,,] 10658 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Success!
-2018-11-28 17:04:55.709 DEBUG [-,,,] 10658 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Request handled in 973 milliseconds
-```
-
-
-#### Fail query
-
-```
-curl -vv -X POST http://localhost:8080/query?mode=1
-```
-
-The output on the server will be now something like, notice that every line contains a traceId and a spanId set:
-
-```
-2018-11-28 17:07:13.434 DEBUG [-,e80db99561823af6,e80db99561823af6,false] 10658 --- [ctor-http-nio-3] org.springframework.sample.Controller    : Query request received
-2018-11-28 17:07:13.434 DEBUG [-,e80db99561823af6,e80db99561823af6,false] 10658 --- [ctor-http-nio-3] org.springframework.sample.Controller    : Performing query, mode 1
-2018-11-28 17:07:13.434 DEBUG [-,e80db99561823af6,e80db99561823af6,false] 10658 --- [ctor-http-nio-3] org.springframework.sample.Controller    : Performing query against https://doesnotexist.noop
-2018-11-28 17:07:13.437  WARN [-,e80db99561823af6,e80db99561823af6,false] 10658 --- [ctor-http-nio-3] org.springframework.sample.Controller    : Error happened doesnotexist.noop: nodename nor servname provided, or not known
-2018-11-28 17:07:13.439 DEBUG [-,e80db99561823af6,e80db99561823af6,false] 10658 --- [ctor-http-nio-3] org.springframework.sample.Controller    : Request handled in 5 milliseconds
+2018-12-19 11:52:27.738 DEBUG [-,12eb13dd704d6c66,12eb13dd704d6c66,false] 4550 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Query request received
+2018-12-19 11:52:27.738 DEBUG [-,12eb13dd704d6c66,12eb13dd704d6c66,false] 4550 --- [ctor-http-nio-2] org.springframework.sample.Controller    : Performing query, mode 1
+2018-12-19 11:52:29.019  WARN [-,,,] 4550 --- [nc-response-0-0] org.springframework.sample.Controller    : Error happened software.amazon.awssdk.services.ssm.model.ParameterNotFoundException: null (Service: Ssm, Status Code: 400, Request ID: 37dcbbf7-9a76-4d19-932b-f09747949f45)
+2018-12-19 11:52:29.073 DEBUG [-,,,] 4550 --- [nc-response-0-0] org.springframework.sample.Controller    : Request handled in 1335 milliseconds```
 ```

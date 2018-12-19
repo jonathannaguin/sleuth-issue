@@ -43,4 +43,6 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter:2.1.0.M2")
     compile("org.springframework.boot:spring-boot-starter-aop:2.1.0.RELEASE")
     compile("org.springframework.cloud:spring-cloud-sleuth-core:2.1.0.M2")
+
+    compile "software.amazon.awssdk:ssm:2.1.0"
 }

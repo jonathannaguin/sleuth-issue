@@ -14,16 +14,19 @@ public class Service
     private Client client;
 
     @Autowired
-    private ErrorHandler errorHandler;
+    private ModeService modeService;
 
     public Mono<Html> query(int mode)
     {
         logger.debug("Performing query, mode {}", mode);
-        return client.execute(mode)
-                     .flatMap(contents -> {
-                         logger.debug("Success!");
-                         return Mono.just(new Html(contents));
-                     })
-                     .onErrorResume(error -> Mono.just(errorHandler.handle(error)));
+
+        Mono<String> urlMono = modeService.find(mode);
+
+        return urlMono.flatMap(url -> client.execute(url))
+                       .flatMap(contents -> {
+                           logger.debug("Success!");
+                           return Mono.just(new Html(contents));
+                       })
+                       .onErrorResume(error -> Mono.just(new ErrorHandler().handle(error)));
     }
 }
