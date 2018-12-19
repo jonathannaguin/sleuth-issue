@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 @org.springframework.stereotype.Service
 public class Service
 {
-    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(Service.class);
 
     @Autowired
     private Client client;

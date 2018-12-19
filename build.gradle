@@ -45,4 +45,5 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-sleuth-core:2.1.0.M2")
 
     compile "software.amazon.awssdk:ssm:2.1.0"
+    compile 'io.zipkin.aws:brave-instrumentation-aws-java-sdk-v2-core:0.15.2'
 }
